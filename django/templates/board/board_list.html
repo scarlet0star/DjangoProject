@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<nav class="bg-primary bg-gradient text-white">
+    <div class="container px-4 text-center">
+        <h1 class="fw-bolder">게시판홈 </h1>
+        <p class="lead">원하는 게시판을 생성하고, 접속할 수 있습니다.</p>
+        <p><a class="text-white " href="{% url 'board:create'%}">
+            <img src="{% static 'assets/arrow-right-circle.svg' %}" width="20" height="20" class="d-inline-block" alt="" class="icon" id="logo">게시판 생성</a>
+        </p>
+    </div>
+</nav>
+
+<div class="container col-9">
+    <ul class="list-group">
+    {% if BoardList %}
+        {% for board in BoardList %}
+        <li class="list-group-item list-group-item-light">
+            <div class="boardList" >
+                <span class="h3">
+                    <a href = "{% url 'board:aboard' board.subject %}" >{{board.subject}}</a> 
+                </span>
+                <span class="mx-auto">
+                    <a href ="{% url 'user:userInfo' board.principal.nickname %}"> 
+                        <img src="{% static 'assets/flower1.svg' %}" width="15" height="15" class="d-inline-block" alt="" class="icon"> {{board.principal.nickname}}</a>
+                </span>
+                <p class="mx-auto">
+                        {{board.context}} 
+                </p>    
+            </div>
+        </li>
+        {% endfor %}
+            
+    {% else %}
+    <li class="list-group-item list-group-item-light">
+        <div class="boardList text-center">
+            <p> 현재 생성된 게시판이 없습니다.</p>
+        </div>
+    </li>
+    {% endif %}
+    </ul>
+</div>
+{% endblock %}

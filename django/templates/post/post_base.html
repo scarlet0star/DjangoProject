@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% if request.user != thePost.PostAuthor %}
+    {{thePost.UpdateViews}}
+{% endif %}
+<div class="navi pl-md-7">
+    <ul class="btn-group" role="group"> 
+        <button type="submit" class="btn btn-primary" onclick="location.href='{% url 'board:aboard' thePost.board.subject %}'">목록</button>
+        <button type="submit" class="btn btn-primary" onclick="location.href='{% url 'board:post' thePost.board.subject %}'">글쓰기</button>
+        {% if thePost.PostAuthor == request.user%}
+        <button type="submit" class="btn btn-primary" onclick="location.href='{% url 'board:update' boardName=thePost.board.subject postID=thePost.PostID %}'">수정</button>
+        <form action="{% url 'board:delete' boardName=thePost.board.subject postID=thePost.PostID %}" method="POST" onsubmit="return confirm('정말로 삭제할까요?')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">삭제</button>
+        </form>
+        {%else%}
+        {%endif%}
+    </ul>
+</div>
+
+<div class="container col-12">
+    <main class="center-block" role="main">
+        <table class="table table-bordered overflow-auto">
+            <tr>
+                <td class="h3" colspan="4">{{thePost.title}}</td>
+            </tr>
+            <tr>
+                <td><a href="{% url 'user:userInfo' thePost.PostAuthor.nickname %}">{{thePost.PostAuthor.nickname}}</a></td>
+                <td>조회수 {{thePost.views}} </td>
+                <td>추천수 {{thePost.count_like}} </td>
+                <td>작성일 {{thePost.writeDate}} </td>
+            </tr>
+            <tr>
+                <td style="padding-bottom: 10%;" colspan="4">{{thePost.contents | safe }} </td>
+            </tr>
+            <tr><td  class="text-center" style="border-top: hidden;" colspan="4">
+                <form action="{% url 'board:like' postID=thePost.PostID %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-primary"><span>
+                        <img src="{% static 'assets/star.svg' %}" width="15" height="15" class="d-inline-block mr-2" alt="" class="icon">
+                    </span>
+                    {{thePost.count_like}}</button>
+                </form>
+                </td>
+            </tr>
+        </table>
+        
+        
+        {% if comments %}
+        <div class="col-12 table-bordered">
+                {% for com in comments %}
+                <div class="container-fluid table-bordered my-2">
+                    <div>
+                        <a href="{% url 'user:userInfo' com.CommentAuthor.nickname  %}">{{com.CommentAuthor.nickname}}</a>
+                    </div>
+                    <div style="width:auto">
+                        {{com.contents}}
+                    </div>
+                    <div >
+                        <span style="font-size: 0.7em;">({{com.writeDate}})</span>
+                    </div>
+
+                    {% if com.CommentAuthor == request.user %}
+                    <div class="btn-group">
+                        <div>
+                            <button class="btn btn-primary" data-toggle="collapse" data-target="#edit{{com.CommentID}}" aria-expanded="false">수정</button>
+                            <div id="edit{{com.CommentID}}" class="collapse">
+                                <form action="{% url 'board:CEdit' boardName=com.post.board.subject postID=com.post.PostID commentID=com.CommentID %}" method="POST">
+                                    {% csrf_token %}
+                                    {{form}}
+                                    <button type="submit" class="btn btn-primary">수정완료</button>
+                                </form>
+                            </div>
+                        </div> 
+                        <div>
+                            <form action="{% url 'board:CDelete' boardName=com.post.board.subject postID=com.post.PostID commentID=com.CommentID %}" method="POST" onsubmit="return confirm('정말로 삭제할까요?')">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" >삭제</button>
+                            </form>
+                        </div>      
+                    </div>
+                    {%endif%}
+                </div>
+            {%endfor%}
+        </div>
+        {% else %}
+        {% endif %}
+    
+       <div>
+        {% if request.user.is_authenticated %}
+            <form action="" method="POST" style="white-space:nowrap;">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="btn float-right mt-3 btn-primary">댓글달기</button>
+            </form>
+        {% else %}
+            <div>
+                <a href="{% url 'user:login' %}">로그인이 필요합니다</a>
+            </div>
+        {% endif %}
+        </div>  
+    </main>
+</div>
+{% endblock %}

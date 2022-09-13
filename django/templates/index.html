@@ -1,0 +1,71 @@
+{%extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Header-->
+<header class="bg-primary bg-gradient text-white">
+    <div class="container px-4 text-center">
+        <h1 class="fw-bolder">안녕하세요, MyCommunity 입니다</h1>
+        <p class="lead">이 프로젝트의 홈페이지이자, Readme 페이지입니다</p>
+    </div>
+</header>
+<!-- About section-->
+<section id="about">
+    <div class="container px-4">
+        <div class="row gx-4 justify-content-center">
+            <div class="col-lg-8">
+                <h2>무엇을 소개하나요</h2>
+                <p class="lead">이 페이지는 인터넷 커뮤니티 사이트들을 클론코딩한 프로젝트, MyCommunity의 소개와 만드는 과정 등을 담고 있습니다. 이 페이지는 아직 미완성입니다. <span class="bg-warning">상단 배너의 링크들을 클릭하여 이 페이지를 빠져나갈 수 있습니다.</span></p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Services section-->
+<section class="bg-light" id="services">
+    <div class="container px-4">
+        <div class="row gx-4 justify-content-center">
+            <div class="col-lg-8">
+                <h2>구현한 기능들</h2>
+                <p class="lead">구현한 기능은 커뮤니티의 기본적인 기능인 두가지인 User 모델과 게시판 모델 구현입니다.</p>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        User : CRUD
+                    </li>
+                    <li class="list-group-item">
+                        Board : 게시판 CRUD
+                    </li>
+                    <li class="list-group-item">
+                        Board : 포스트 CRUD
+                    </li>
+                    <li class="list-group-item">
+                        Board : 댓글 CRUD
+                    </li>
+                    <li class="list-group-item">
+                        Board : 검색
+                    </li>
+                    <li class="list-group-item">
+                        Board : 추천
+                    </li>
+                </ul>
+                <p class="mt-1">
+                    커뮤니티의 기본적인 기능을 구현하고자 힘썼습니다. User 모델의 경우 django에서 권장하는대로 django.auth에서 지원하는 AbstractUser을 상속받은 후 auth 함수들을 이용하여 구성하였습니다.
+                    <span class="text-white bg-danger">공부 부족으로 인해서 Ajax을 사용하지 않아 비동기식 처리는 지원하지 않습니다. 또한 모바일 환경을 고려하여 구성하지 못했습니다.</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact section-->
+<section id="contact">
+    <div class="container px-4">
+        <div class="row gx-4 justify-content-center">
+            <div class="col-lg-8">
+                <h2>어떻게 구현했나요</h2>
+                <img src="media/bone.png"  style="width: 25vw; min-width: 140px; display: block; margin: 0px auto; ;" alt="My Image">
+                <p>위 이미지와 같이, 이 프로젝트는 Python Django를 기반으로 만들어졌으며 DB는 MYSQL을, 이 사이트를 웹상에 배포하기 위해서 AWS, Docker, Nginx, Gunicorn를 사용했으며, 그 외에도 버전관리를 위해 Git을, 웹페이지는 Bootstrap을 활용하였습니다. </p>
+                <P>django로 만들어진 app과 gunicorn + nginx, mysql 을 docker-compose로 한데 묶어 AWS에서 실행하는 것으로 이 프로젝트를 배포 할 수 있었습니다.</P>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}        

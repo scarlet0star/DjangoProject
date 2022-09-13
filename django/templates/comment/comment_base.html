@@ -1,0 +1,12 @@
+{% extends "post/post_base.html" %}
+{% block comments %}
+<div style="text-align: center">
+    코멘트를 만드는 html입니다.
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="textarea" width="100%">
+        <input type="submit" value="댓글달기">
+    </form>
+</div>
+
+{% endblock comment %}

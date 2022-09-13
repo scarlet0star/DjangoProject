@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="form container">
+    <label for="ID" class="form-label">계정 ID</label>
+    <input class="form-control" type="text" placeholder="{{user.username}}" id="ID" aria-label="Disabled input example" disabled>
+    <label for="nickname" class="form-label">계정 닉네임</label>
+    <input class="form-control" type="text" placeholder="{{user.nickname}}" id="nickname" aria-label="Disabled input example" disabled>
+    <label for="email" class="form-label">email</label>
+    <input class="form-control" type="text" placeholder="{{user.email}}" id="email" aria-label="Disabled input example" disabled>
+    <label for="date_join" class="form-label">계정생성일</label>
+    <input class="form-control" type="text" placeholder="{{user.date_joined}}" id="date_joined" aria-label="Disabled input example" disabled>
+
+    <div class="btn-group float-right mt-3" role="group">
+        <button type="button" class="btn btn-outline-primary" onclick = "location.href = '{% url 'user:userInfo' user.nickname %}' ">활동내역</button>
+        <button type="button" class="btn btn-outline-primary" onclick = "location.href = '{% url 'user:update' user.username%}' ">정보변경</button>
+        <button type="button" class="btn btn-outline-primary" onclick = "location.href = '{% url 'user:logout' %}' ">로그아웃</button>
+    </div>
+</div>
+
+{% else %}
+    로그인 해야하는 서비스 입니다.<br>
+    <a href="{% url 'user:login' %}">로그인 하기</a>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+{%load static %}
+
+{% block content %}
+<div class="form-group text-center" >
+    <div class="col-md-3">
+        <form action="" method="POST" class="form-signin">
+            <h1 class="h3  mt-5 mb-3 font-weight-normal">포스트 작성</h1>
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-lg mt-3 btn-primary btn-block">수정하기</button>
+            <input type=button class="btn btn-lg mt-3 btn-primary btn-block" value="취소하기" onClick="javascript:history.go(-1);">
+        </form>
+    </div>
+</div>
+{% endblock %}

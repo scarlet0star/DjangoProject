@@ -1,0 +1,53 @@
+{% load static %}
+
+<header class="navbar sticky-top navbar-expand-md navbar-dark bg-dark bg-gradient">
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark bg-gradient">
+    <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'assets/line.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" class="icon" id="logo">
+            MyCommunity</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        
+        {% if request.user.is_authenticated %}
+        <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li class="nav-item dropdown col-6 col-md-auto ">
+                <a class="nav-link p-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{request.user.nickname}}
+                </a>
+            <div class="dropdown-menu .dropdown-menu-end">
+                <a class="dropdown-item" href="{% url 'user:user' %}">
+                    <img src="{% static 'assets/person-fill.svg' %}" width="15" height="15" class="d-inline-block" alt="" class="icon"> 계정정보</a>
+                <a class="dropdown-item" href="{% url 'user:userInfo' request.user.nickname %}"> 
+                    <img src="{% static 'assets/list-task.svg' %}" width="15" height="15" class="d-inline-block" alt="" class="icon"> 활동내역</a>
+                <a class="dropdown-item" href="{% url 'user:update' user.username%}">
+                    <img src="{% static 'assets/pencil-square.svg' %}" width="15" height="15" class="d-inline-block" alt="" class="icon"> 정보변경</a>
+                <a class="dropdown-item" href="{% url 'user:logout' %}">
+                    <img src="{% static 'assets/door-closed-fill.svg' %}" width="15" height="15" class="d-inline-block" alt="" class="icon"> 로그아웃</a>
+            </div>
+            </li>
+        </ul>
+        {% else %}
+        <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li class="nav-item col-6 col-md-auto">
+                <a class="nav-link p-2" href="{% url 'user:login' %}">로그인 하기</a>
+
+            </li>
+
+        </ul>
+
+        {% endif %}
+
+        <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav pt-2 py-md-0">
+        
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'board:home' %}">게시판홈</a>
+            </li>
+        
+        </ul>
+        
+    </div>
+  </nav>
+</header>

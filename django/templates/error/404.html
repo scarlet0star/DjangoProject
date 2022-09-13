@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <body>
+        <div class="d-flex align-items-center justify-content-center vh-100">
+            <div class="text-center">
+                <h1 class="display-1 fw-bold">404</h1>
+                <p class="fs-3"> <span class="text-danger">이런!</span> 페이지가 존재하지 않습니다</p>
+                <p class="lead">
+                    존재하지 않는 페이지에 접근했습니다.
+                  </p>
+                <a href="{% url 'home' %}" class="btn btn-primary">홈페이지로</a>
+            </div>
+        </div>
+    </body>
+{% endblock %}

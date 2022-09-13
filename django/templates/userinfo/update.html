@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{%load static %}
+
+{% block content %}
+    <div class="text-center" style="margin:100 auto;">
+        <div class="col-md-3 mt-5" style="float: none; margin:0 auto;">
+            <form action="" method="POST" class="form-group" >
+                {% csrf_token %}
+                {{ form.as_p }}  
+                <button type="submit" class="btn btn-lg mt-3 btn-primary btn-block">수정하기</button>
+            </form>
+        <a type="submit" class="btn btn-lg mt-3 btn-primary btn-block" href="{% url 'user:updatePW' theUser.username %}">비밀번호 변경하러 가기</a>
+            <div style="margin-top:50px" >
+                <form class="form-group"  action="{% url 'user:off' theUser.username %}" method="POST" onsubmit="return confirm('정말로 정지 할까요?')">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-lg mt-3 btn-danger btn-block">계정 정지 하기</button>
+                    <div class="form-text">계정 삭제시에 게시글과 댓글들은 자동적으로 지워지지 않으며, 계정 정지는 되돌릴 수 없습니다.</div> 
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "board/board_template.html" %}
+
+{% block content %}
+<div>
+  <main class="col-9 py-md-3 pl-md-5 bd-content" role="main">
+    <table class="table">
+        <thead class="rowTop">
+            <th class="rowNum">
+                글번호
+            </th>
+            <th class="rowTitle">
+                제목
+            </th>
+            <th class="rowAuthor">
+                작성자
+            </th>
+            <th class="rowTime">
+                작성시간
+            </th>
+            <th class="rowViews">
+                조회
+            </th>
+            <th class="rowRate">
+                추천
+            </th>
+        </thead>
+    
+    {% if posts %}
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td class="rowNum">
+                    {{post.pk}}
+                </td>
+                <td class="rowTitle">
+                    <a href="{% url 'board:detail' boardName=board.subject postID=post.pk  %}">{{post.title}}   [{{post.comments}}]</a>
+                </td>
+                <td class="rowAuthor">
+                    <a href="{% url 'user:userInfo' post.PostAuthor.nickname %}">{{post.PostAuthor.nickname}}</a> 
+                </td>
+                <td class="rowTime">
+                    {{post.writeDate}}
+                </td>
+                <td class="rowViews">
+                    {{post.views}}
+                </td>
+                <td class="rowRate">
+                    {{post.count_like}}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    {% endif %}
+    <br>
+  </main>
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-3 bd-sidebar">
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="form-group text-center" style="float: none; margin:100 auto;">
+    <div class="col-md-3" style="float: none; margin:0 auto;">
+        <form action="" method="POST" class="form-signin">
+            <h1 class="h3  mt-5 mb-3 font-weight-normal">게시판 생성</h1>
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-lg mt-3 btn-primary btn-block">게시판 생성</button>
+            <input type=button class="btn btn-lg mt-3 btn-primary btn-block" value="취소하기" onClick="javascript:history.go(-1);">
+        </form>
+    </div>
+</div>
+{% endblock %}

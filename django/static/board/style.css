@@ -1,0 +1,28 @@
+table {
+    width : 100%;
+}
+th,td {
+    padding: 10px;
+}
+
+tbody{
+    text-align: center;
+}
+
+ul{
+    list-style: none;
+}
+
+li{
+    float:left;
+    margin-right: 2px;
+}
+
+.boardSubject{
+    text-align: center;
+}
+
+.boardMenu{
+    text-align: left;
+    margin-left: 20%;
+}

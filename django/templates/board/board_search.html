@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+{% load template_filter %}
+{% block content %}
+    <div class="navi pl-md-5">
+        <div>
+            <p class="lead">{{board.subject}} 게시판</p>
+            <p class="small">{{board.context}}</p>
+        </div>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item">
+                <a  href="{% url 'board:aboard' board.subject %}">목록</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{% url 'board:post' board.subject %}">글쓰기</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{% url 'board:likeSearch' board.subject %}">추천글</a>
+            </li>
+          </ul>
+    </div>
+    <div>
+        <main class="col-9 py-md-3 pl-md-5 bd-content" role="main">
+          <table class="table table-hover table-bordered overflow-auto">
+              <thead class="table-dark">
+                  <th style="width: 6%">
+                      글번호
+                  </th>
+                  <th style="width: 50%">
+                      제목
+                  </th>
+                  <th style="width: 15%">
+                      작성자
+                  </th>
+                  <th style="width: 18%">
+                      작성시간
+                  </th>
+                  <th style="width: 5%">
+                      조회
+                  </th>
+                  <th style="width: 5%">
+                      추천
+                  </th>
+              </thead>
+          
+          {% if posts %}
+              <tbody>
+              {% for post in posts %}
+                  <tr>
+                      <td class="rowNum">
+                            {{paginator.count|sub:forloop.counter0}} 
+                      </td>
+                      <td class="rowTitle">
+                        {% if post.count_like >= 2 %}
+                        <img src="{% static 'assets/star.svg' %}" width="15" height="15" class="d-inline-block" alt="" class="icon">
+                        {% endif %}
+                          <a href="{% url 'board:detail' boardName=board.subject postID=post.pk  %}">{{post.title}}   [{{post.comments}}]</a>
+                      </td>
+                      <td class="rowAuthor">
+                        {% if post.PostAuthor == post.board.principal %}
+                        <img src="{% static 'assets/flower1.svg' %}" width="15" height="15" class="d-inline-block" alt="" class="icon">
+                        {% endif %}
+                          <a href="{% url 'user:userInfo' post.PostAuthor.nickname %}">{{post.PostAuthor.nickname}}</a> 
+                      </td>
+                      <td class="rowTime">
+                          {{post.writeDate}}
+                      </td>
+                      <td class="rowViews">
+                          {{post.views}}
+                      </td>
+                      <td class="rowRate">
+                          {{post.count_like}}
+                      </td>
+                  </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+          {% else %}
+              </tbody>
+        </table>
+                <p class="text-center">해당되는 포스트가 존재하지 않습니다.</p>
+          {% endif %}
+          <br>
+        </main>
+          <div class="container-fluid">
+              <div class="row flex-nowrap">
+                  <div class="col-3 bd-sidebar">
+                      
+                      
+                  </div>
+              </div>
+          </div>
+    </div>
+    
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?t={{type}}&c={{content}}&page={{page_obj.previous_page_number}}">이전</a>
+            </li>
+            {%else%}
+            <li class="page-item disabled">
+                <span class="page-link">이전</span>
+            </li>
+            {% endif %}
+            {% for page in page_range %}
+            {% if page == page_obj.number  %}
+            <li class="page-item active">
+                <a class="page-link" href="?t={{type}}&c={{content}}&page= {{page}}">{{page}}<span class="sr-only">(current)</span></a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?t={{type}}&c={{content}}&page= {{page}}">{{page}}</a>
+            </li>
+            {% endif %}
+            {%endfor%}
+    
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link"  href="?t={{type}}&c={{content}}&page={{page_obj.next_page_number}}">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">다음</span>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

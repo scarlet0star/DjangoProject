@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="form-group text-center mt-2" >
+    <div class="col-9" >
+        <form action="" method="POST" class="form-signin">
+            <h1 class="h3 mt2 font-weight-normal">포스트 작성</h1>
+            {% csrf_token %}
+            {{ form.as_table }}
+            <div class="btn-group float-right" role="group">
+                <input type=button class="btn mt-3 btn-danger " value="취소하기" onClick="javascript:history.go(-1);">
+                <button type="submit" class="btn mt-3 btn-primary">포스트 작성</button>         
+            </div>
+            
+        </form>
+    </div>
+</div>
+{% endblock %}

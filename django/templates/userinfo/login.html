@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if request.user.is_authenticated%}
+<div class="container"style="float: none; margin:100 auto;">
+    <div class="col-md-3" style="float: none; margin:0 auto;">
+        <p>잘못된 접근입니다.</p>
+        <input type=button value="Previous Page" onClick="javascript:history.go(-1);">
+    </div>
+</div>
+{%else%}
+
+<div class="form-group text-center" style="float: none; margin:100 auto;">
+    <div class="col-md-3" style="float: none; margin:0 auto;">
+        <form action="" method="POST" class="form-signin">
+            <h1 class="h3  mt-5 mb-3 font-weight-normal">로그인</h1>
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-lg mt-3 btn-primary btn-block">로그인</button>
+        </form>
+        <a class="btn mt-3 btn-lg btn-primary btn-block" href="{% url 'user:signup' %}">회원가입</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

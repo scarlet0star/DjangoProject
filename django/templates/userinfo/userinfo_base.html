@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<body>
+    <p class="h1 mt-3 text-center">{{theUser.nickname}}님의 최근 기록</p>
+    <div class="container-md col-6" >
+        <div>
+            <p class="h5 bg-light">최근 작성한 15 포스트</p>
+            <ul class="list-group">
+            {% if theUser %}
+                {% for info in posts %}
+                <li class="list-group-item">
+                    <a href="{% url 'board:detail' boardName=info.board.subject postID=info.pk %}">
+                    <span class="badge rounded-pill bg-dark" style="color:white">{{info.board.subject}} 게시판</span>
+                    <span> {{info}}[{{info.comments}}] </span>
+                    <span style="font-size: 0.7em ; color:black">{{info.writeDate}}</span>
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            {% endif %} 
+        </div>
+    
+        <div>
+            <p class="h5 bg-light">최근 작성한 15 댓글</p>
+            <ul class="list-group">
+            {% if theUser %}
+                {% for info in comments %}
+                    <li class="list-group-item">
+                        <a href="{% url 'board:detail' boardName=info.post.board.subject postID=info.post.pk %}">
+                        <span class="badge rounded-pill bg-dark" style="color:white">{{info.post.board.subject}} 게시판</span>
+                        <span>{{info.contents}}</span>
+                        <span style="font-size: 0.7em ; color:black">{{info.writeDate}}</span>
+                        </a>
+                    </li>
+            {% endfor %}
+            </ul>
+            </div>
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
